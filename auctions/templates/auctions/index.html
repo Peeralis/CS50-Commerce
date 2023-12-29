@@ -2,18 +2,19 @@
 
 {% block body %}
     <h2>Active Listings</h2>
-    <ul>
-        {% for listing in listings %}
-            <li>
-                <a href="{% url 'listings' listing.id %}">{{ listing.title }}</a>
-                    <p>{{ listing.description }}</p>
-                    <p>{{ listing.starting_bid }}</p>
-                    <img class="listing-image" src="{{listing.image.url}}" alt="Image">
-                    <p>{{listing.image.url}}</p>
-                    <p>{{ listing.category }}</p>
-                    <p>{{ listing.user }}</p>
-                    <p>{{ listing.active }}</p>
-                </ul>
-            </li>
-        {% endfor %}
+    {% for listing in listings %}
+        {% if listing.active %}
+            <a href="{% url 'listings' listing.id %}" >
+                <div class="listing">
+                    <div class="img-box"><img class="listing-image" src="{{listing.image.url}}" alt="Image"></div>
+                    <div class="listing-details">
+                        <h3>{{ listing.title }}</h3>
+                        <p>{{ listing.description }}</p>
+                        <p>Price : {{ listing.starting_bid }} $</p>
+                        <p>Created by {{ listing.user }}</p>
+                    </div>
+                </div>
+            </a>
+        {% endif %}
+    {% endfor %}
 {% endblock %}

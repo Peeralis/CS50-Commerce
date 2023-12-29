@@ -10,8 +10,10 @@ urlpatterns = [
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
-    path("listings/<int:listings_id>", views.listings, name="listings"),
-    # path("listings", views.active_listings, name="active_listings"),
+    path("listings/<int:listing_id>", views.listings, name="listings"),
+    path("watchlist", views.watchlist, name="watchlist"),
+    path("add_watchlist/<int:listing_id>", views.add_watchlist, name="add_watchlist"),
+    path("remove_watchlist/<int:listing_id>", views.remove_watchlist, name="remove_watchlist"),
 ]
 
 if settings.DEBUG:

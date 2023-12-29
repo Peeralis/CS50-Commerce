@@ -92,13 +92,13 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
-def listings(request, listings_id):
-    listing = Listing.objects.get(id=listings_id)
+def listings(request, listing_id):
+    listing = Listing.objects.get(id=listing_id)
     comments = Comment.objects.filter(listing=listing)
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user)
         if listing.user == user:
-            return render(request, "auctions/listing.html", {
+            return render(request, "auctions/listings.html", {
                 "listing": listing,
                 "comments": comments,
                 "watchlist": user.watchlist.all(),
@@ -106,16 +106,40 @@ def listings(request, listings_id):
                 "close": True
             })
         else:
-            return render(request, "auctions/listing.html", {
+            return render(request, "auctions/listings.html", {
                 "listing": listing,
                 "comments": comments,
                 "watchlist": user.watchlist.all(),
                 "user": user
             })
     else:
-        return render(request, "auctions/listing.html", {
+        return render(request, "auctions/listings.html", {
             "listing": listing,
             "comments": comments
         })
     
+def watchlist(request):
+    watchlist = Watchlist.objects.filter(user=request.user)
+    listings = []
+    for item in watchlist:
+        listings.append(item.listing)
+    print(watchlist)
+    return render(request, "auctions/watchlist.html", {
+        "listings": listings
+    })
+    
+def add_watchlist(request, listing_id):
+    listing = Listing.objects.get(id=listing_id)
+    user = User.objects.get(username=request.user)
+    if Watchlist.objects.filter(user=user, listing=listing).exists():
+        return HttpResponseRedirect(reverse("listings", args=(listing_id,)))
+    watchlist = Watchlist(user=user, listing=listing)
+    watchlist.save()
+    return HttpResponseRedirect(reverse("listings", args=(listing_id,)))
 
+def remove_watchlist(request, listing_id):
+    listing = Listing.objects.get(id=listing_id)
+    user = User.objects.get(username=request.user)
+    watchlist = Watchlist.objects.get(user=user, listing=listing)
+    watchlist.delete()
+    return HttpResponseRedirect(reverse("watchlist"))

@@ -1,0 +1,17 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+    <h2>Listings : {{ listing.title }}</h2>
+    <div class="listing">
+        <div class="img-box"><img class="listing-image" src="{{listing.image.url}}" alt="Image"></div>
+        <div class="listing-details">
+            <h3>{{ listing.title }}</h3>
+            <p>{{ listing.description }}</p>
+            <p>Price : {{ listing.starting_bid }} $</p>
+            <p>Created by {{ listing.user }}</p>
+            {% if user.is_authenticated %}
+                <a href="{% url 'add_watchlist' listing.id%}"><button class="btn btn-primary">Add to Watchlist</button></a>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
