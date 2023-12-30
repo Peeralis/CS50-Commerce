@@ -143,3 +143,17 @@ def remove_watchlist(request, listing_id):
     watchlist = Watchlist.objects.get(user=user, listing=listing)
     watchlist.delete()
     return HttpResponseRedirect(reverse("watchlist"))
+
+def create_listing(request):
+    if request.method == "POST":
+        title = request.POST["title"]
+        description = request.POST["description"]
+        starting_bid = request.POST["starting_bid"]
+        image = request.FILES["image"]
+        category = request.POST["category"]
+        user = User.objects.get(username=request.user)
+        listing = Listing(title=title, description=description, starting_bid=starting_bid, image=image, category=category, user=user)
+        listing.save()
+        return HttpResponseRedirect(reverse("index"))
+    else:
+        return render(request, "auctions/create_listing.html")

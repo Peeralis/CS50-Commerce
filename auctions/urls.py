@@ -14,6 +14,7 @@ urlpatterns = [
     path("watchlist", views.watchlist, name="watchlist"),
     path("add_watchlist/<int:listing_id>", views.add_watchlist, name="add_watchlist"),
     path("remove_watchlist/<int:listing_id>", views.remove_watchlist, name="remove_watchlist"),
+    path("create", views.create_listing, name="create_listing"),
 ]
 
 if settings.DEBUG:
