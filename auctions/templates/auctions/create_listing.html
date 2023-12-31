@@ -5,19 +5,16 @@
     <form action="{% url 'create_listing' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
-            <input class="form-control" autofocus type="text" name="title" placeholder="Title">
+            <input required class="form-control" autofocus type="text" name="title" placeholder="Title">
         </div>
         <div class="form-group">
             <textarea class="form-control" type="text" name="description" placeholder="Description"></textarea>
         </div>
         <div class="form-group">
-            <input class="form-control" type="text" name="category" placeholder="Category">
+            <input required class="form-control" type="number" name="starting_bid" placeholder="Starting Bid">
         </div>
         <div class="form-group">
-            <input class="form-control" type="number" name="starting_bid" placeholder="Starting Bid">
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="file" name="image" placeholder="Image">
+            <input required class="form-control" type="file" name="image" placeholder="Image">
         </div>
         <input class="btn btn-primary" type="submit" value="Create">
     </form>

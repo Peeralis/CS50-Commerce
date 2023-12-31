@@ -4,13 +4,13 @@
     <h2>Active Listings</h2>
     {% for listing in listings %}
         {% if listing.active %}
-            <a href="{% url 'listings' listing.id %}" >
+            <a href="{% url 'listings' listing.id %}">
                 <div class="listing">
-                    <div class="img-box"><img class="listing-image" src="{{listing.image.url}}" alt="Image"></div>
-                    <div class="listing-details">
+                    <div class="listings-img-box"><img class="listings-image" src="{{listing.image.url}}" alt="Image"></div>
+                    <div class="listings-details">
                         <h3>{{ listing.title }}</h3>
                         <p>{{ listing.description }}</p>
-                        <p>Price : {{ listing.starting_bid }} $</p>
+                        <p>starter : {{ listing.starting_bid }}$</p>
                         <p>Created by {{ listing.user }}</p>
                     </div>
                 </div>
