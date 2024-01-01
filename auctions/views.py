@@ -159,3 +159,19 @@ def bid(request, listing_id):
         return HttpResponseRedirect(reverse("listings", args=(listing_id,)))
     else:
         return HttpResponseRedirect(reverse("listings", args=(listing_id,)))
+    
+def wining_bid(request):
+    listings = Listing.objects.all()
+    return render(request, "auctions/wining_bid.html", { "listings": listings })
+
+def my_listings(request):
+    listings = Listing.objects.filter(user=request.user)
+    bids = []
+    for listing in listings:
+        bid = Bid.objects.filter(listing=listing).last()
+        if bid:
+            bids.append(bid)
+        else: 
+            bids.append("No bids yet")
+    bids = zip(listings, bids)
+    return render(request, "auctions/my_listings.html", {"bids": bids})

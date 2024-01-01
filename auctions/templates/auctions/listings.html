@@ -1,52 +1,5 @@
 {% extends "auctions/layout.html" %}
-<!-- def listings(request, listing_id):
-    bid = Bid.objects.filter(listing=listing_id).last()
-    listing = Listing.objects.get(id=listing_id)
-    comments = Comment.objects.filter(listing=listing)
-    if request.user.is_authenticated:
-        user = User.objects.get(username=request.user)
-        if listing.user == user:
-            return render(request, "auctions/listings.html", {
-                "listing": listing,
-                "comments": comments,
-                "watchlist": user.watchlist.all(),
-                "user": user,
-                "close": True,
-                "bid": bid
-            })
-        else:
-            return render(request, "auctions/listings.html", {
-                "listing": listing,
-                "comments": comments,
-                "watchlist": user.watchlist.all(),
-                "user": user,
-                "bid": bid
-            })
-    else:
-        return render(request, "auctions/listings.html", {
-            "listing": listing,
-            "comments": comments,
-            "bid": bid
-        })
-def bid(request, listing_id):
-    if request.method == "POST":
-        bid = request.POST["bid"]
-        user = User.objects.get(username=request.user)
-        listing = Listing.objects.get(id=listing_id)
-        if Bid.objects.filter(listing=listing).exists():
-            current_bid = Bid.objects.filter(listing=listing).order_by('-bid')[0]
-            if float(bid) > float(current_bid.bid):
-                bid = Bid(bid=bid, user=user, listing=listing)
-                bid.save()
-                return HttpResponseRedirect(reverse("listings", args=(listing_id,)))
-            else:
-                return HttpResponseRedirect(reverse("listings", args=(listing_id,)))
-        else:
-            bid = Bid(bid=bid, user=user, listing=listing)
-            bid.save()
-            return HttpResponseRedirect(reverse("listings", args=(listing_id,)))
-    else:
-        return HttpResponseRedirect(reverse("listings", args=(listing_id,))) -->
+
 {% block body %}
     <h2>Listings : {{ listing.title }}</h2>
     <div class="listing-img-box"><img class="listing-image" src="{{listing.image.url}}" alt="Image"></div>
