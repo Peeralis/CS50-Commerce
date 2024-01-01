@@ -39,7 +39,7 @@ class Watchlist(models.Model):
     def __str__(self):
         return f"{self.user} - {self.listing}"
 
-class WiningBid(models.Model):
+class WinningBid(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='wining_user')
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='wining_listing')
     bid = models.ForeignKey(Bid, on_delete=models.CASCADE, related_name='wining_bid')

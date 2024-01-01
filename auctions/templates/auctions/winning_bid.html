@@ -1,0 +1,23 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+    <h2>Your Winning</h2>
+    {% for listing, bid in winning_bids %}
+                <div class="listing">
+                        <div class="listings-img-box">
+                            <a href="{% url 'listings' listing.id %}">
+                                <img class="listings-image" src="{{listing.image.url}}" alt="Image">
+                            </a>
+                        </div>
+                    <div class="listings-details">
+                        <a href="{% url 'listings' listing.id %}">
+                            <h3>{{ listing.title }}</h3>
+                            <p>{{ listing.description }}</p>
+                            <p>starter : {{ listing.starting_bid }}$</p>
+                            <p>Winning Bid: {{bid.bid}}</p>
+                    </div>
+                </div>
+    {% endfor %}
+    {% if winning_bids.length == 0 %}
+        <p>You have no winning bid.</p>
+    {% endif %}
+{% endblock %}

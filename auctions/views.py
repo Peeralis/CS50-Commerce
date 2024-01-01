@@ -160,9 +160,17 @@ def bid(request, listing_id):
     else:
         return HttpResponseRedirect(reverse("listings", args=(listing_id,)))
     
-def wining_bid(request):
-    listings = Listing.objects.all()
-    return render(request, "auctions/wining_bid.html", { "listings": listings })
+def winning_bid(request):
+    listings = Listing.objects.filter(active=False)
+    winning_bids = []
+    for listing in listings:
+        bid = Bid.objects.filter(listing=listing).last()
+        if bid:
+            winning_bids.append(bid)
+        else: 
+            winning_bids.append("No bids yet")
+    winning_bids = zip(listings, winning_bids)
+    return render(request, "auctions/winning_bid.html", {"winning_bids": winning_bids})
 
 def my_listings(request):
     listings = Listing.objects.filter(user=request.user)
@@ -175,3 +183,9 @@ def my_listings(request):
             bids.append("No bids yet")
     bids = zip(listings, bids)
     return render(request, "auctions/my_listings.html", {"bids": bids})
+
+def close_listing(request, listing_id):
+    listing = Listing.objects.get(id=listing_id)
+    listing.active = False
+    listing.save()
+    return HttpResponseRedirect(reverse("my_listings"))

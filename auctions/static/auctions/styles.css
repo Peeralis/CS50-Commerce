@@ -21,7 +21,6 @@ body {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    flex-grow: 1;
 }
 
 .listings-details {

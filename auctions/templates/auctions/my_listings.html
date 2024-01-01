@@ -2,23 +2,32 @@
 {% block body %}
     <h2>Your Listings</h2>
     {% for listing, bid in bids %}
-        {% if listing.active %}
-            <a href="{% url 'listings' listing.id %}">
                 <div class="listing">
-                    <div class="listings-img-box"><img class="listings-image" src="{{listing.image.url}}" alt="Image"></div>
+                        <div class="listings-img-box">
+                            <a href="{% url 'listings' listing.id %}">
+                                <img class="listings-image" src="{{listing.image.url}}" alt="Image">
+                            </a>
+                        </div>
                     <div class="listings-details">
-                        <h3>{{ listing.title }}</h3>
-                        <p>{{ listing.description }}</p>
-                        <p>starter : {{ listing.starting_bid }}$</p>
-                        {% if bid == "No bids yet" %}
-                            <p>{{ bid }}</p>
-                        {% else %}
-                            <p>Current Bid : {{ bid.bid }} $</p>
+                        <a href="{% url 'listings' listing.id %}">
+                            <h3>{{ listing.title }}</h3>
+                            <p>{{ listing.description }}</p>
+                            <p>starter : {{ listing.starting_bid }}$</p>
+                            {% if bid == "No bids yet" %}
+                                <p>{{ bid }}</p>
+                            {% else %}
+                                {% if listing.active %}
+                                    <p>Current Bidder : {{ bid.user }}</p>
+                                {% else %}
+                                    <p>Winning Bid : {{ bid.bid }}$ by {{ bid.user }}</p>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                        {% if listing.active %}
+                            <a href="{% url 'close_listing' listing.id %}"><button class="btn btn-primary">Close</button></a>
                         {% endif %}
                     </div>
                 </div>
-            </a>
-        {% endif %}
     {% endfor %}
     {% if bids.length == 0 %}
         <p>You have no active listings.</p>
